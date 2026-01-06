@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
     return userData;
   };
 
-  const register = async (name, email, password, role = 'USER') => {
+  const register = async (name, email, password, role = 'user') => {
     const response = await api.post('/auth/register', { name, email, password, role });
     const { user: userData, token } = response.data.data;
 
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
     logout,
     loading,
     isAuthenticated: !!user,
-    isAdmin: user?.role === 'ADMIN'
+    isAdmin: user?.role === 'admin'
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

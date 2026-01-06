@@ -35,7 +35,7 @@ exports.register = async (req, res) => {
       name,
       email,
       password,
-      role: role || 'USER'
+      role: role || 'user'
     });
 
     // Generate token

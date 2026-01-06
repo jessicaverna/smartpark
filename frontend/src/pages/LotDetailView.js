@@ -9,7 +9,8 @@ function LotDetailView() {
   const [lotData, setLotData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const { user, logout } = useAuth();
+  const [simulating, setSimulating] = useState(false);
+  const { user, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,6 +36,19 @@ function LotDetailView() {
 
   const handleBack = () => {
     navigate('/dashboard');
+  };
+
+  const handleSimulate = async () => {
+    setSimulating(true);
+    try {
+      await api.post(`/slots/simulate/${lotId}`);
+      // Refresh the lot details to show updated slots
+      await fetchLotDetails();
+    } catch (err) {
+      console.error('Failed to simulate slot changes:', err);
+    } finally {
+      setSimulating(false);
+    }
   };
 
   if (loading) {
@@ -64,8 +78,19 @@ function LotDetailView() {
         <button onClick={handleBack} className="btn-back">← Back to Dashboard</button>
 
         <div className="lot-header">
-          <h2>{lotData.parkingLot.name}</h2>
-          <p className="location">{lotData.parkingLot.location}</p>
+          <div>
+            <h2>{lotData.parkingLot.name}</h2>
+            <p className="location">{lotData.parkingLot.location}</p>
+          </div>
+          {(isAdmin || user?.role === 'admin') && (
+            <button
+              onClick={handleSimulate}
+              className="btn-simulate"
+              disabled={simulating}
+            >
+              {simulating ? 'Simulating...' : 'Simulate Slot Changes'}
+            </button>
+          )}
         </div>
 
         <div className="summary-cards">
