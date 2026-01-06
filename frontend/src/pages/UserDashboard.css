@@ -1,0 +1,282 @@
+.user-dashboard {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+}
+
+.navbar {
+  background: white;
+  padding: 18px 40px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar h1 {
+  color: #667eea;
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-right span {
+  color: #555;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.btn-logout {
+  padding: 10px 20px;
+  background: #f44336;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+  background: #d32f2f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.container h2 {
+  color: #2d3748;
+  margin-bottom: 32px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.parking-lots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.parking-lot-card {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.parking-lot-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.parking-lot-card h3 {
+  color: #2d3748;
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.location {
+  color: #718096;
+  font-size: 14px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.availability {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+
+.available-count,
+.total-count {
+  text-align: center;
+}
+
+.available-count .number {
+  display: block;
+  font-size: 32px;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+.total-count .number {
+  display: block;
+  font-size: 32px;
+  font-weight: bold;
+  color: #666;
+}
+
+.label {
+  display: block;
+  font-size: 12px;
+  color: #999;
+  margin-top: 5px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.progress-fill {
+  height: 100%;
+  transition: width 0.4s ease;
+  background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
+}
+
+.btn-view {
+  width: 100%;
+  padding: 12px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-view:hover:not(:disabled) {
+  background: #5568d3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-view:disabled {
+  background: #cbd5e0;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 18px;
+  color: #718096;
+  font-weight: 500;
+}
+
+.error-message {
+  background: #fff5f5;
+  color: #c53030;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  border-left: 4px solid #fc8181;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.available-format {
+  text-align: center;
+  padding: 12px 0;
+}
+
+.availability-text {
+  font-size: 24px;
+  font-weight: 700;
+  color: #48bb78;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 16px 20px;
+  }
+
+  .navbar h1 {
+    font-size: 22px;
+  }
+
+  .nav-right {
+    gap: 16px;
+  }
+
+  .nav-right span {
+    display: none;
+  }
+
+  .container {
+    padding: 24px 16px;
+  }
+
+  .container h2 {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  .parking-lots-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .parking-lot-card {
+    padding: 20px;
+  }
+
+  .availability-text {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 14px 16px;
+  }
+
+  .navbar h1 {
+    font-size: 20px;
+  }
+
+  .btn-logout {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .container {
+    padding: 20px 12px;
+  }
+
+  .container h2 {
+    font-size: 22px;
+  }
+
+  .parking-lot-card h3 {
+    font-size: 18px;
+  }
+
+  .availability-text {
+    font-size: 20px;
+  }
+
+  .btn-view {
+    padding: 10px;
+    font-size: 14px;
+  }
+}

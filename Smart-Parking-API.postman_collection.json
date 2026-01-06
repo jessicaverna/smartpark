@@ -1,0 +1,383 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+		"name": "Smart Parking API",
+		"description": "API collection for Smart Parking Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"user123\",\n  \"role\": \"user\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5001/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						},
+						"description": "Register a new user account"
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"token\", jsonData.data.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"user123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5001/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login with email and password. Token will be automatically saved to environment."
+					},
+					"response": []
+				},
+				{
+					"name": "Login Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"token\", jsonData.data.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@smartpark.com\",\n  \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5001/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login as admin. Token will be automatically saved to environment."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Parking Lots",
+			"item": [
+				{
+					"name": "Get All Parking Lots",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5001/api/lots",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"lots"
+							]
+						},
+						"description": "Retrieve all parking lots with availability information"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Parking Lot (Admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.data && jsonData.data._id) {",
+									"    pm.collectionVariables.set(\"lotId\", jsonData.data._id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Mall C - West Wing\",\n  \"location\": \"Jl. Sudirman No. 789, Jakarta\",\n  \"totalCapacity\": 12\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5001/api/lots",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"lots"
+							]
+						},
+						"description": "Create a new parking lot (Admin only). Lot ID will be saved to environment."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Parking Lot (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Mall C - East Wing Updated\",\n  \"location\": \"Jl. Sudirman No. 789, Jakarta (Updated)\",\n  \"totalCapacity\": 15\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5001/api/lots/{{lotId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"lots",
+								"{{lotId}}"
+							]
+						},
+						"description": "Update parking lot information (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Parking Lot (Admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5001/api/lots/{{lotId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"lots",
+								"{{lotId}}"
+							]
+						},
+						"description": "Delete a parking lot and all associated spots (Admin only)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Parking Slots",
+			"item": [
+				{
+					"name": "Get Slots by Lot ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5001/api/slots/lot/{{lotId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"slots",
+								"lot",
+								"{{lotId}}"
+							]
+						},
+						"description": "Get all parking slots for a specific parking lot"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Slot Status (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"OCCUPIED\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5001/api/slots/{{slotId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"slots",
+								"{{slotId}}"
+							]
+						},
+						"description": "Update parking slot status (Admin only). Status can be: AVAILABLE, OCCUPIED, or RESERVED"
+					},
+					"response": []
+				},
+				{
+					"name": "Simulate Slot Changes (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5001/api/slots/simulate/{{lotId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"slots",
+								"simulate",
+								"{{lotId}}"
+							]
+						},
+						"description": "Simulate random slot status changes for testing (Admin only)"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5001/api"
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "lotId",
+			"value": ""
+		}
+	]
+}
