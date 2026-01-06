@@ -17,7 +17,7 @@ function UserDashboard() {
 
   const fetchParkingLots = async () => {
     try {
-      const response = await api.get('/parking-lots');
+      const response = await api.get('/lots');
       setParkingLots(response.data.data);
     } catch (err) {
       setError('Failed to load parking lots');

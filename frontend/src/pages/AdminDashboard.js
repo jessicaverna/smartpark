@@ -25,7 +25,7 @@ function AdminDashboard() {
 
   const fetchParkingLots = async () => {
     try {
-      const response = await api.get('/parking-lots');
+      const response = await api.get('/lots');
       setParkingLots(response.data.data);
       setError('');
     } catch (err) {
@@ -43,7 +43,7 @@ function AdminDashboard() {
   const handleAddLot = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/parking-lots', formData);
+      await api.post('/lots', formData);
       setSuccess('Parking lot added successfully');
       setShowAddForm(false);
       setFormData({ name: '', location: '', totalCapacity: '' });
@@ -56,7 +56,7 @@ function AdminDashboard() {
   const handleEditLot = async (e) => {
     e.preventDefault();
     try {
-      await api.put(`/parking-lots/${editingLot}`, formData);
+      await api.put(`/lots/${editingLot}`, formData);
       setSuccess('Parking lot updated successfully');
       setEditingLot(null);
       setFormData({ name: '', location: '', totalCapacity: '' });
@@ -69,7 +69,7 @@ function AdminDashboard() {
   const handleDeleteLot = async (id) => {
     if (window.confirm('Are you sure you want to delete this parking lot?')) {
       try {
-        await api.delete(`/parking-lots/${id}`);
+        await api.delete(`/lots/${id}`);
         setSuccess('Parking lot deleted successfully');
         fetchParkingLots();
       } catch (err) {
